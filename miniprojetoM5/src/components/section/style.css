@@ -1,0 +1,17 @@
+.header-section{
+    padding: 2rem;
+    background-color: #fff;
+    border-top: 1px solid  #02021C; 
+    border-bottom: 1px solid  #02021C;
+}
+
+.header-section h2 {
+    width: 180px;
+    background-color: #021736; 
+    color: #ffff; 
+    padding: 0.5rem 0.5rem; 
+    border: none; 
+    border-radius: 15px; 
+    text-align: center; 
+    font-size: 1.5rem; 
+}
