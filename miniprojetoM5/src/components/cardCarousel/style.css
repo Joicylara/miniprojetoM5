@@ -1,0 +1,46 @@
+.card-carousel{
+    min-width: 300px; /* Largura mínima para os cards */
+    flex-shrink: 0; /* Impede que os cards encolham */
+    border: 1px solid #ccc; /* Borda do card */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para o card */
+    background-color: rgba(255, 255, 255, 0.6); 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: large;
+}
+
+.carousel-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto; /* Permite a rolagem horizontal */
+    scroll-behavior: smooth; /* Rolagem suave */
+}
+
+.carousel-button {
+    background-color: rgba(255, 255, 255, 0.6); /* Cor verde ou outra de sua preferência */
+    border: none; /* Remover borda */
+    border-radius: 50%; /* Bordas arredondadas, se desejado */
+    width: 60px; /* Tamanho do botão */
+    height: 60px; /* Tamanho do botão */
+    cursor: pointer; /* Mão ao passar o mouse */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; /* Para garantir que fique acima do carrossel */
+    display: flex; /* Flexbox para centralizar o ícone */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    font-size: 24px; /* Ajuste o tamanho do ícone */
+}
+
+.carousel-button.left {
+    left: 100px; /* Posiciona a seta esquerda */
+}
+
+.carousel-button.right {
+    right: 100px; /* Posiciona a seta direita */
+}
+
+
+
