@@ -1,10 +1,12 @@
-import './style.css'
+import "./style.css";
 
-export default function Card({ className, title, description }){
-    return(
-        <div className={className}>
-            <h1>{title}</h1>
-            <p>{description}</p>
-        </div>
+export default function Card({ className, title, description }) {
+    return (
+        <>
+            <div className={className}>
+                <h1>{title}</h1>
+                <div>{description}</div> {/* Troque <p> por <div> */}
+            </div>
+        </>
     );
 }

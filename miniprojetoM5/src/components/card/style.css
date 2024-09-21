@@ -1,8 +1,18 @@
 
-.card {
+/* .card {
     background-color: rgba(255, 255, 255, 0.6); 
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
+} */
+
+.card {
+    min-width: 300px; /* Largura mínima para os cards */
+    flex-shrink: 0; /* Impede que os cards encolham */
+    border: 1px solid #ccc; /* Borda do card */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para o card */
+    background-color: rgba(255, 255, 255, 0.6); 
 }
