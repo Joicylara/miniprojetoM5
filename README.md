@@ -52,7 +52,7 @@ npm run dev
 ```
 A aplicação estará acessível em deploy também: https://miniprojeto-m5-qualidade-do-ar.vercel.app/.
 
-### API Utilizada
+## 📡 API Utilizada
 O projeto consome dados de uma API que fornece informações sobre a qualidade do ar, que foi desenvolvida no módulo 4. Para mais detalhes sobre a API utilizada, visite o repositório: [sistema-qualidade-ar](https://github.com/Joicylara/sistema-qualidade-ar)
 
 ## ⚙ Funcionalidades
