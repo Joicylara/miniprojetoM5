@@ -83,7 +83,15 @@ O projeto consome dados de uma API que fornece informações sobre a qualidade d
   <p>Card com as informações de acordo com a qualidade do ar, busca somente dispositivos de monitoramento onde o local tem a qualidade como 'good' e 'Moderate' - get(/searchQualityAir)</p>
 </div>
 
-### Conclusão
+## 🧪 Teste
+<div align = "center"> 
+  <h3>Site Ar Puro</h3>
+  <img src = "src\assets\videoReadme\apresentaçãoM5.gif"  width = "600px">
+  <p>Testando o site, mostrando os seus efeitos e animações</p>
+</div>
+
+
+## Conclusão
 Este projeto foi desenvolvido com o objetivo de aplicar conceitos de frontend utilizando React, consumindo uma API para exibir dados dinâmicos e atualizáveis sobre dados ambientais realacionado a qualidade do ar. Através dele, foi possível explorar o uso de componentes React, gerenciamento de estado e a biblioteca Axios para realizar requisições HTTP. Com melhorias futuras, como:
 - Melhoria da Responsividade:
     - Tornar o site mais responsivo, garantindo uma melhor experiência de uso em diferentes dispositivos e tamanhos de tela.
