@@ -1,27 +1,29 @@
 import React, { useState } from "react";
-import DeviceCard from "../deviceCard"; // Ajuste o caminho conforme necessário
-import "./style.css";
+import DeviceCard from "../deviceCard";
+import styles from "./style.module.css";
 
-const CardCarousel = ({className, title, description, devices, showData }) => {
+
+
+const CardCarousel = ({ className, title, description, devices, showData }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const cardsToShow = 2; // Número de cards a mostrar
-    const maxIndex = devices.length - cardsToShow; // Índice máximo permitido
+    const cardsToShow = 2;
+    const maxIndex = devices.length - cardsToShow;
 
     const scrollCarousel = (direction) => {
         setCurrentIndex((prevIndex) => {
             const newIndex = prevIndex + direction;
-            if (newIndex < 0) return 0; // Limita o índice inferior
-            if (newIndex > maxIndex) return maxIndex; // Limita o índice superior
+            if (newIndex < 0) return 0;
+            if (newIndex > maxIndex) return maxIndex;
             return newIndex;
         });
     };
 
     return (
         <>
-            <div className= {className}>
+            <div className={`${className} ${styles.cardCarousel}`}>
                 <h1>{title}</h1>
                 <p>{description}</p>
-                <div className="carousel-container">
+                <div className={styles.carouselContainer}>
                     {showData && devices.length > 0 ? (
                         devices.slice(currentIndex, currentIndex + cardsToShow).map((device, index) => (
                             <DeviceCard key={device.idUser} device={device} index={currentIndex + index} />
@@ -30,10 +32,10 @@ const CardCarousel = ({className, title, description, devices, showData }) => {
                         showData && <p>Nenhum dispositivo encontrado.</p>
                     )}
                 </div>
-                {showData && devices.length > cardsToShow && ( // Mostrar setas apenas se houver mais dispositivos
+                {showData && devices.length > cardsToShow && (
                     <>
-                        <button className="carousel-button left" onClick={() => scrollCarousel(-1)}>◀️</button>
-                        <button className="carousel-button right" onClick={() => scrollCarousel(1)}>▶️</button>
+                        <button className={`${styles.carouselButton} ${styles.left}`} onClick={() => scrollCarousel(-1)}>◀️</button>
+                        <button className={`${styles.carouselButton} ${styles.right}`} onClick={() => scrollCarousel(1)}>▶️</button>
                     </>
                 )}
             </div>
