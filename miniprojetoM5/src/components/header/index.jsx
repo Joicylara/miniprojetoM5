@@ -20,7 +20,7 @@ export default function Header({ scrollToSection, toggleMenu }) {
                     <button onClick={() => scrollToSection('classification')}>Classificação</button>
                     <button onClick={() => scrollToSection('device')}>Dispositivos</button>
                     <button onClick={() => scrollToSection('contact')}>Contato</button>
-                    
+
                 </div>
 
             </header>

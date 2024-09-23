@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "../../components/card";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import Section from "../../components/section";
 import CardCarousel from "../../components/cardCarousel";
 import "./style.css";
+import SpecificSensorCard from "../../components/specificSensorCard";
+import SearchBar from "../../components/searchBar";
+import Card from "../../components/card";
+
 
 export default function Home() {
+
     const [devices, setDevices] = useState([]);
-    const [airQualityData, setAirQualityData] = useState([]);
-    const [showData, setShowData] = useState(false);
     const [loadingDevices, setLoadingDevices] = useState(true);
-    const [loadingAirQuality, setLoadingAirQuality] = useState(true);
     const [errorDevices, setErrorDevices] = useState(null);
+    const [showDeviceData, setShowDeviceData] = useState(false);
+
+    const [airQualityData, setAirQualityData] = useState([]);
+    const [showAirQualityData, setShowAirQualityData] = useState(false);
+    const [loadingAirQuality, setLoadingAirQuality] = useState(true);
     const [errorAirQuality, setErrorAirQuality] = useState(null);
+    
+    const [sensorName, setSensorName] = useState("");
+    const [specificSensorData, setSpecificSensorData] = useState([]);
+    const [loadingSpecificSensor, setLoadingSpecificSensor] = useState(false);
+    const [errorSpecificSensor, setErrorSpecificSensor] = useState(null);
+
 
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
@@ -28,19 +40,24 @@ export default function Home() {
         mobileMenu.classList.toggle('open');
     }
 
-    const toggleDataDisplay = () => {
-        setShowData(!showData);
+    const toggleDeviceDataDisplay = () => {
+        setShowDeviceData(prev => !prev);
+        if (showAirQualityData) setShowAirQualityData(false); 
     };
 
-    // Fetch para dispositivos
+    const toggleAirQualityDataDisplay = () => {
+        setShowAirQualityData(prev => !prev);
+        if (showDeviceData) setShowDeviceData(false); 
+    };
+
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/searchDevice');
-                setDevices(response.data.allDevice || []);
+                const response = await axios.get('https://teste-deploy-api-6s8g.onrender.com/searchDevice');
+                const sensorData = response.data.allDevice || [];
+                setDevices(sensorData);
                 setLoadingDevices(false);
             } catch (error) {
-                console.error('Erro ao buscar dispositivos:', error);
                 setErrorDevices('Erro ao buscar dispositivos');
                 setLoadingDevices(false);
             }
@@ -52,11 +69,10 @@ export default function Home() {
     useEffect(() => {
         const fetchAirQualityData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/searchQualityAir');
-                setAirQualityData(response.data.qualityAir || []); // Ajuste aqui
+                const response = await axios.get('https://teste-deploy-api-6s8g.onrender.com/searchQualityAir');
+                setAirQualityData(response.data.qualityAir || []);
                 setLoadingAirQuality(false);
             } catch (error) {
-                console.error('Erro ao buscar classificação de qualidade do ar:', error);
                 setErrorAirQuality('Erro ao buscar classificação de qualidade do ar');
                 setLoadingAirQuality(false);
             }
@@ -65,56 +81,94 @@ export default function Home() {
         fetchAirQualityData();
     }, []);
 
+    const fetchSpecificSensorData = async () => {
+        if (!sensorName) return;
+        setLoadingSpecificSensor(true);
+        setErrorSpecificSensor(null);
 
-    // UseEffect para monitorar mudanças em airQualityData
-    useEffect(() => {
-        console.log("airQualityData atualizado:", airQualityData);
-    }, [airQualityData]);
+        try {
+            const response = await axios.get(`https://teste-deploy-api-6s8g.onrender.com/searchSensorSpecific/${sensorName}`);
+            if (response.data.sensorSpecific && response.data.sensorSpecific.length > 0) {
+                setSpecificSensorData(response.data.sensorSpecific);
+            } else {
+                setSpecificSensorData([]);
+            }
+            setLoadingSpecificSensor(false);
+        } catch (error) {
+            setErrorSpecificSensor('Erro ao buscar sensor específico');
+            setLoadingSpecificSensor(false);
+        }
+    };
 
     return (
         <>
             <div className="body">
                 <Header scrollToSection={scrollToSection} toggleMenu={toggleMenu} />
 
-                {/* Seção de Dispositivos */}
                 <section id="home" className="home">
-                    <CardCarousel className="card-carousel"
+                    <CardCarousel
                         title="Bem-vindo ao Sistema de Monitoramento da Qualidade do Ar"
                         description="Acompanhe a qualidade do ar e gerencie os dados facilmente."
                         devices={devices}
-                        showData={showData}
+                        showData={showDeviceData}
                     />
-                    <button onClick={toggleDataDisplay} className="show-data-button">
-                        {showData ? "Ocultar os Dados dos Dispositivos" : "Mostrar Dados dos Dispositivos"}
+                    <button onClick={toggleDeviceDataDisplay} className="show-data-button">
+                        {showDeviceData ? "Ocultar os Dados dos Dispositivos" : "Mostrar Dados dos Dispositivos"}
                     </button>
                 </section>
 
-                {/* Seção de Dispositivos */}
-                <Section id="device" title="Dispositivos">
+                <Section id="device" className="sensors" title="Sensores">
+                    <SearchBar
+                        sensorName={sensorName}
+                        setSensorName={setSensorName}
+                        fetchSpecificSensorData={fetchSpecificSensorData}
+                    />
                     <div className="card-container-device">
-                        {loadingDevices && <p>Carregando dispositivos...</p>}
-                        {errorDevices && <p>Erro: {errorDevices}</p>}
-                        {!loadingDevices && devices.length === 0 && <p>Nenhum dispositivo encontrado.</p>}
+                        {specificSensorData.length === 0 && !sensorName ? (
+                            <Card className="card"
+                                title="Busca de Sensor Específico"
+                                description={
+                                    <>
+                                        Encontre e monitore dados específicos de um sensor.
+                                        Mantenha-se informado sobre a qualidade do ar em diferentes regiões.<br />
+                                        Os sensores são: PM2_5, PM10, CO, NO2, O3, SO2, smoke.<br />
+                                        OBS: pesquise com essas nomenclaturas
+                                    </>
+                                }
+                            />
+                        ) : null}
+
+                        {loadingSpecificSensor && <p>Carregando dados do sensor...</p>}
+                        {errorSpecificSensor && <p>Erro: {errorSpecificSensor}</p>}
+                        {!loadingSpecificSensor && specificSensorData.length === 0 && sensorName && (
+                            <Card className="card"
+                                title="Nenhum sensor encontrado"
+                                description="Tente novamente seguindo a nomenclatura correta"
+                            />
+                        )}
+                        {Array.isArray(specificSensorData) && specificSensorData.length > 0 && (
+                            <SpecificSensorCard sensors={specificSensorData} />
+                        )}
                     </div>
                 </Section>
 
-                {/* Seção de Classificação da Qualidade do Ar */}
                 <Section id="classification" title="Classificação">
                     <div className="classification-content">
-                        {showData ? (
+                        {showAirQualityData ? (
                             <CardCarousel className="card-classification"
                                 title="Classificação da Qualidade do Ar"
                                 description="Acompanhe os índices de classificação da qualidade do ar."
                                 devices={airQualityData}
-                                showData={showData}
+                                showData={showAirQualityData}
                             />
                         ) : (
                             <div className="image-container">
-                                <img src="src/assets/img/tabelaIndice.png" alt="Tabela de Índice" />
+                                <img src="src\assets\img\tabelaIndice.png" alt="Tabela de Índice" />
                             </div>
                         )}
-                        <button onClick={toggleDataDisplay} className="toggle-button">
-                            {showData ? "Mostrar Tabela de Índice" : "Mostrar registro da qualidade boa e moderada"}
+
+                        <button onClick={toggleAirQualityDataDisplay} className="show-data-button">
+                            {showAirQualityData ? "Ocultar Classificação" : "Mostrar Classificação"}
                         </button>
 
                         {loadingAirQuality && <p>Carregando classificação de qualidade do ar...</p>}
@@ -123,11 +177,10 @@ export default function Home() {
                     </div>
                 </Section>
 
-
-
-
                 <Footer />
             </div>
+
+            
         </>
     );
 }

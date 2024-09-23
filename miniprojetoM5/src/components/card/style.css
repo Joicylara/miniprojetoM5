@@ -1,18 +1,53 @@
-
-/* .card {
-    background-color: rgba(255, 255, 255, 0.6); 
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-} */
-
 .card {
-    min-width: 300px; /* Largura mínima para os cards */
-    flex-shrink: 0; /* Impede que os cards encolham */
-    border: 1px solid #ccc; /* Borda do card */
-    border-radius: 5px; /* Bordas arredondadas */
-    padding: 20px; /* Espaçamento interno */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para o card */
-    background-color: rgba(255, 255, 255, 0.6); 
+    min-width: 300px; 
+    flex-shrink: 0; 
+    border: 1px solid #33022f; 
+    border-radius: 5px; 
+    padding: 20px; 
+    box-shadow: 0 2px 5px rgba(88, 3, 70, 0.1);
+    background-color: rgba(228, 188, 200, 0.8); 
+    color: #000;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-container-classification {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 20px; 
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .card {
+        min-width: 100%; 
+    }
+
+    .toggle-button {
+        width: 100%; 
+        padding: 15px;
+    }
+}
+
+@media (max-width: 450px) {
+    .card {
+        min-width: 100%; 
+        padding: 15px; 
+    }
+
+    .toggle-button {
+        font-size: 14px; 
+        padding: 10px;
+        width: 100%; 
+    }
+
+    .image-container img {
+        width: 100%; 
+        height: auto; 
+    }
 }

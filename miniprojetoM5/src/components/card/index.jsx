@@ -5,7 +5,7 @@ export default function Card({ className, title, description }) {
         <>
             <div className={className}>
                 <h1>{title}</h1>
-                <div>{description}</div> {/* Troque <p> por <div> */}
+                <div>{description}</div> 
             </div>
         </>
     );
