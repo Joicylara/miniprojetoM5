@@ -87,7 +87,7 @@ O projeto consome dados de uma API que fornece informações sobre a qualidade d
 <div align = "center"> 
   <h3>Site Ar Puro</h3>
   <img src = "src\assets\videoReadme\apresentaçãoM5.gif"  width = "600px">
-  <p>Testando o site, mostrando os seus efeitos e animações</p>
+  <p>Testando o site, mostrando os seus efeitos e animações. OBS: talvez as demore para aparecer as informações, mas é devido o deploy da API</p>
 </div>
 
 
